@@ -64,3 +64,24 @@ export async function getProductsInCollection() {
 
   return allProducts;
 }
+
+export async function getAllProducts() {
+  const query = `{
+    products(first: 250) {
+      edges {
+        node {
+          handle
+          id
+        }
+      }
+    }
+  }`;
+
+  const response = await ShopifyData(query);
+
+  const slugs = response.data.products.edges
+    ? response.data.products.edges
+    : [];
+
+  return slugs;
+}
