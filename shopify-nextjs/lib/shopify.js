@@ -85,3 +85,82 @@ export async function getAllProducts() {
 
   return slugs;
 }
+
+export async function getProduct(handle) {
+  const query = `
+  {
+    product(handle: "${handle}") {
+    	collections(first: 1) {
+      	edges {
+          node {
+            products(first: 5) {
+              edges {
+                node {
+                  priceRange {
+                    minVariantPrice {
+                      amount
+                    }
+                  }
+                  handle
+                  title
+                  id
+                  images(first: 5) {
+                    edges {
+                      node {
+                        url
+                        altText
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+    	}
+      id
+      title
+      handle
+      description
+      images(first: 5) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
+      options {
+        name
+        values
+        id
+      }
+      variants(first: 25) {
+        edges {
+          node {
+            selectedOptions {
+              name
+              value
+            }
+            image {
+              url
+              altText
+            }
+            title
+            id
+            availableForSale
+            priceV2 {
+              amount
+            }
+          }
+        }
+      }
+    }
+  }`;
+
+  const response = await ShopifyData(query);
+
+  const product = response.data.product ? response.data.product : [];
+
+  return product;
+}
