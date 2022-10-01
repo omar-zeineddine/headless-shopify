@@ -1,0 +1,36 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+shopify-nextjs/node_modules
+shopify-nextjs/.pnp
+shopify-nextjs/.pnp.js
+
+# testing
+shopify-nextjs/coverage
+
+# next.js
+shopify-nextjs/.next/
+shopify-nextjs/out/
+
+# production
+shopify-nextjs/build
+
+# misc
+shopify-nextjs/.DS_Store
+shopify-nextjs/*.pem
+
+# debug
+shopify-nextjs/npm-debug.log*
+shopify-nextjs/yarn-debug.log*
+shopify-nextjs/yarn-error.log*
+shopify-nextjs/.pnpm-debug.log*
+
+# local env files
+shopify-nextjs/.env*.local
+
+# vercel
+shopify-nextjs/.vercel
+
+# typescript
+shopify-nextjs/*.tsbuildinfo
+shopify-nextjs/next-env.d.ts
