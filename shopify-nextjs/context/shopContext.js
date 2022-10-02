@@ -60,6 +60,7 @@ export default function ShopProvider({ children }) {
 
       // update cart state and add new checkout object
       setCart(newCart);
+
       const newCheckout = await updateCheckout(checkoutId, newCart);
       localStorage.setItem(
         "checkout_id",
