@@ -27,15 +27,19 @@ export default function ShopProvider({ children }) {
     }
   }, []);
 
-  async function addToCart(addedItem) {
-    const newItem = { ...addedItem };
+  async function addToCart(newItem) {
+    // const newItem = { ...addedItem };
     // console.log(newItem);
     setCartOpen(true);
 
     if (cart.length === 0) {
       setCart([newItem]);
+      // console.log(newItem);
 
-      const checkout = await createCheckout(newItem.id, 1);
+      const checkout = await createCheckout(
+        newItem.id,
+        newItem.variantQuantity
+      );
 
       setCheckoutId(checkout.id);
       setCheckoutUrl(checkout.webUrl);
@@ -64,6 +68,26 @@ export default function ShopProvider({ children }) {
     }
   }
 
+  async function removeCartItem(itemToRemove) {
+    const updatedCart = cart.filter((item) => item.id !== itemToRemove);
+    setCartLoading(true);
+
+    setCart(updatedCart);
+
+    const newCheckout = await updateCheckout(checkoutId, updatedCart);
+
+    localStorage.setItem(
+      "checkout_id",
+      JSON.stringify([updatedCart, newCheckout])
+    );
+    setCartLoading(false);
+
+    // close cart if no items
+    if (cart.length === 1) {
+      setCartOpen(false);
+    }
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -72,6 +96,7 @@ export default function ShopProvider({ children }) {
         setCartOpen,
         addToCart,
         checkoutUrl,
+        removeCartItem,
       }}
     >
       {children}

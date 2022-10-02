@@ -3,11 +3,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { CartContext } from "../context/shopContext";
 import { formatter } from "../utils/helpers";
-import { XIcon } from "@heroicons/react/outline/XIcon";
+import { XIcon } from "@heroicons/react/outline/";
 
 export default function MiniCart({ cart }) {
   const cancelButtonRef = useRef();
-  const { cartOpen, setCartOpen, checkoutUrl } = useContext(CartContext);
+  const { cartOpen, setCartOpen, checkoutUrl, removeCartItem } =
+    useContext(CartContext);
 
   let cartTotal = 0;
   cart.map((item) => {
@@ -63,7 +64,7 @@ export default function MiniCart({ cart }) {
                             onClick={() => setCartOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
-                            {/* <XIcon className="h-6 w-6" aria-hidden="true" /> */}
+                            <XIcon className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
                       </div>
@@ -109,6 +110,9 @@ export default function MiniCart({ cart }) {
 
                                     <div className="flex">
                                       <button
+                                        onClick={() =>
+                                          removeCartItem(product.id)
+                                        }
                                         type="button"
                                         className="font-medium text-gray-500 hover:text-gray-800"
                                       >
