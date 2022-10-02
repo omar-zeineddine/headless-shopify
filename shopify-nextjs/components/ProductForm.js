@@ -39,6 +39,17 @@ export default function ProductForm({ product }) {
     setSelectedOptions((prevState) => {
       return { ...prevState, [name]: value };
     });
+    // update selected variant option
+    const selection = {
+      ...selectedOptions,
+      [name]: value,
+    };
+
+    allVariantOptions.map((item) => {
+      if (JSON.stringify(item.options) === JSON.stringify(selection)) {
+        setSelectedOptions(item);
+      }
+    });
   }
 
   return (
