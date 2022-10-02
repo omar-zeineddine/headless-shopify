@@ -27,6 +27,10 @@ export default function ProductPageContent({ product }) {
         <div className="w-full max-w-md overflow-hidden bg-white border shadow-lg rounded-2xl md:w-1/2">
           <div className="relative w-full h-96">
             <Swiper
+              style={{
+                "--swiper-navigation-color": "#000",
+                "--swiper-pagination-color": "#000",
+              }}
               navigation
               pagination={{ clickable: true }}
               className="h-96 rounded-2xl"
