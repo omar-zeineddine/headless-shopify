@@ -1,11 +1,12 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useState, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { CartContext } from "../context/shopContext";
 import { formatter } from "../utils/helpers";
-import { XIcon } from "@heroicons/react/outline";
+import { XIcon } from "@heroicons/react/outline/XIcon";
 
 export default function MiniCart({ cart }) {
+  const cancelButtonRef = useRef();
   const { cartOpen, setCartOpen, checkoutUrl } = useContext(CartContext);
 
   let cartTotal = 0;
@@ -16,6 +17,7 @@ export default function MiniCart({ cart }) {
   return (
     <Transition.Root show={cartOpen} as={Fragment}>
       <Dialog
+        initialFocus={cancelButtonRef}
         as="div"
         className="relative z-50"
         onClose={() => {
@@ -55,12 +57,13 @@ export default function MiniCart({ cart }) {
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
+                            ref={cancelButtonRef}
                             type="button"
                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                             onClick={() => setCartOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
-                            <XIcon className="h-6 w-6" aria-hidden="true" />
+                            {/* <XIcon className="h-6 w-6" aria-hidden="true" /> */}
                           </button>
                         </div>
                       </div>
@@ -107,7 +110,7 @@ export default function MiniCart({ cart }) {
                                     <div className="flex">
                                       <button
                                         type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        className="font-medium text-gray-500 hover:text-gray-800"
                                       >
                                         Remove
                                       </button>
@@ -132,8 +135,8 @@ export default function MiniCart({ cart }) {
                         </p>
                         <div className="mt-6">
                           <a
-                            href="#"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                            href={checkoutUrl}
+                            className="flex items-center justify-center rounded-md border border-transparent bg-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800"
                           >
                             Checkout
                           </a>
@@ -143,7 +146,7 @@ export default function MiniCart({ cart }) {
                             or
                             <button
                               type="button"
-                              className="font-medium text-indigo-600 hover:text-indigo-500"
+                              className="font-medium hover:text-gray-800"
                               onClick={() => setCartOpen(false)}
                             >
                               Continue Shopping
